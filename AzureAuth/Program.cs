@@ -40,7 +40,9 @@ var envCmd = new Command("env", "Use environment variables for client authentica
     scopes
 };
 
-certCmd.SetHandler(CertHandler.Handle, tenantId, clientId, CertHandler.CertThumbprint ,scopes);
+certCmd.SetHandler(CertHandler.Handle, tenantId, clientId, CertHandler.CertThumbprint, scopes);
+envCmd.SetHandler(EnvHandler.Handle, scopes);
+secretCmd.SetHandler(SecretHandler.Handle, tenantId, clientId, SecretHandler.Secret, scopes);
 
 var rootCmd = new RootCommand()
 {
