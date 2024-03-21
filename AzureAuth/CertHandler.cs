@@ -1,3 +1,4 @@
+using System.CommandLine;
 using System.Security.Cryptography.X509Certificates;
 using Azure.Identity;
 
@@ -5,6 +6,11 @@ namespace AzureAuth;
 
 public static class CertHandler
 {
+    public static Option<string> CertThumbprint = new(["--cert"], "Certificate thumbprint used for authentication")
+    {
+        IsRequired = true
+    };
+    
     public static async Task Handle(string tenantId, string clientId, string certThumbprint, string[] scopes)
     {
         var cert = GetCertificate(certThumbprint);

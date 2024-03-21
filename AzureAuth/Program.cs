@@ -3,18 +3,15 @@
 using System.CommandLine;
 using AzureAuth;
 
-var tenantId = new Option<string>(["-t", "--tenant"])
+var tenantId = new Option<string>(["-t", "--tenant"], "Home tenant of client")
 {
     IsRequired = true
 };
-var clientId = new Option<string>(["-c", "--client"])
+var clientId = new Option<string>(["-c", "--client"], "Client ID used for authentication")
 {
     IsRequired = true
 };
-var certThumbprint = new Option<string>(["--cert"])
-{
-    IsRequired = true
-};
+
 var scopes = new Option<string[]>(["--scopes"])
 {
     AllowMultipleArgumentsPerToken = true,
@@ -22,16 +19,34 @@ var scopes = new Option<string[]>(["--scopes"])
     IsRequired = true,
 };
 
-var rootCmd = new RootCommand();
-var certCmd = new Command("cert", "Certificate")
+var secretCmd = new Command("secret", "Use secret for client authentication")
 {
     tenantId,
     clientId,
-    certThumbprint,
+    SecretHandler.Secret,
+    scopes
+};
+
+var certCmd = new Command("cert", "Use certificate for client authentication")
+{
+    tenantId,
+    clientId,
+    CertHandler.CertThumbprint,
     scopes,
 };
 
-certCmd.SetHandler(CertHandler.Handle, tenantId, clientId, certThumbprint,scopes);
-rootCmd.Add(certCmd);
+var envCmd = new Command("env", "Use environment variables for client authentication")
+{
+    scopes
+};
+
+certCmd.SetHandler(CertHandler.Handle, tenantId, clientId, CertHandler.CertThumbprint ,scopes);
+
+var rootCmd = new RootCommand()
+{
+    secretCmd,
+    certCmd,
+    envCmd,
+};
 
 await rootCmd.InvokeAsync(args);
