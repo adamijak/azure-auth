@@ -1,0 +1,6 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - dotnet publish -c Release -o AzureAuth/out -p:PublishAot=true  AzureAuth
