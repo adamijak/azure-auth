@@ -42,6 +42,7 @@ jobs:
     - name: Build
       run: dotnet publish -c Release -r ${{matrix.target}} -o out AzureAuth
     - name: Move
+      shell: bash
       run: |
         mkdir assets
         mv out/azure-auth.exe assets/azure-auth.${{matrix.target}}.exe || true
