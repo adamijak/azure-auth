@@ -20,7 +20,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Build
-      run: dotnet publish -c Release -o out AzureAuth
+      run: dotnet publish -c Release -r ${{matrix.target}} -o out AzureAuth
     - name: Move
       run: |
         mkdir assets
