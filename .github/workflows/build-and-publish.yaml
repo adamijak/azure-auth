@@ -7,9 +7,6 @@ on:
 
 jobs:
   run:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
     strategy:
         matrix:
           os:
@@ -33,7 +30,9 @@ jobs:
               target: osx-x64
             - os: macos-latest
               target: osx-arm64
-            
+    runs-on: ${{matrix.os}}
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-dotnet@v4
