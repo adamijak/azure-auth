@@ -24,8 +24,8 @@ jobs:
     - name: Move
       run: |
         mkdir assets
-        mv out/azure-auth.exe assets/azure-auth.${{matrix.target}}.exe
-        mv out/azure-auth assets/azure-auth.${{matrix.target}}
+        mv out/azure-auth.exe assets/azure-auth.${{matrix.target}}.exe || true
+        mv out/azure-auth assets/azure-auth.${{matrix.target}} || true
     - name: Publish
       uses: softprops/action-gh-release@v1
       with:
