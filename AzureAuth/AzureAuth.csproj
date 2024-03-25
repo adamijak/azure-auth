@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>azure-auth</AssemblyName>
+        <PublishAot>true</PublishAot>
     </PropertyGroup>
 
     <ItemGroup>

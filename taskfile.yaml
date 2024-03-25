@@ -11,4 +11,4 @@ tasks:
       - task: publish
       - task: local:install
     
-  publish: dotnet publish -c Release -o ./out -p:PublishAot=true  AzureAuth
+  publish: dotnet publish -c Release -o ./out AzureAuth
