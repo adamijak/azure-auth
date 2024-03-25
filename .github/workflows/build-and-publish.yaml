@@ -7,7 +7,7 @@ on:
 
 jobs:
   run:
-    continue-on-error: true
+    # continue-on-error: true
     strategy:
         matrix:
           include:
@@ -17,12 +17,12 @@ jobs:
               os: windows-latest
             - target: linux-x64
               os: ubuntu-latest
-            - target: linux-arm64
-              os: macos-latest
+            # - target: linux-arm64
+            #   os: ubuntu-latest
             - target: linux-musl-x64 
               os: ubuntu-latest
-            - target: linux-musl-arm64
-              os: macos-latest
+            # - target: linux-musl-arm64
+            #   os: ubuntu-latest
             - target: osx-x64
               os: macos-latest
             - target: osx-arm64
