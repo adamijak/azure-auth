@@ -2,15 +2,19 @@
 
 using System.CommandLine;
 using AzureAuth;
+using AzureAuth.Handlers;
 
-var tenantId = new Option<string>(["-t", "--tenant"], "Home tenant of client")
+var raw = new Option<bool>(["-r", "--raw"], "display raw token");
+
+var tenantId = new Option<string>(["-t", "--tenant"], "tenant ID")
 {
     IsRequired = true
 };
-var clientId = new Option<string>(["-c", "--client"], "Client ID used for authentication")
+var clientId = new Option<string>(["-c", "--client"], "client ID")
 {
     IsRequired = true
 };
+
 
 var scopes = new Option<string[]>(["--scopes"])
 {
@@ -19,15 +23,15 @@ var scopes = new Option<string[]>(["--scopes"])
     IsRequired = true,
 };
 
-var secretCmd = new Command("secret", "Use secret for client authentication")
+var secretCmd = new Command("secret", "authenticate using client secret")
 {
     tenantId,
     clientId,
     SecretHandler.Secret,
-    scopes
+    scopes,
 };
 
-var certCmd = new Command("cert", "Use certificate for client authentication")
+var certCmd = new Command("cert", "authenticate using client certificate")
 {
     tenantId,
     clientId,
@@ -35,14 +39,14 @@ var certCmd = new Command("cert", "Use certificate for client authentication")
     scopes,
 };
 
-var envCmd = new Command("env", "Use environment variables for client authentication")
+var envCmd = new Command("env", "authenticate using env variables as described here https://learn.microsoft.com/en-us/dotnet/api/azure.identity.environmentcredential")
 {
-    scopes
+    scopes,
 };
 
-certCmd.SetHandler(CertHandler.Handle, tenantId, clientId, CertHandler.CertThumbprint, scopes);
-envCmd.SetHandler(EnvHandler.Handle, scopes);
-secretCmd.SetHandler(SecretHandler.Handle, tenantId, clientId, SecretHandler.Secret, scopes);
+certCmd.SetHandler(CertHandler.Handle, raw, tenantId, clientId, CertHandler.CertThumbprint, scopes);
+envCmd.SetHandler(EnvHandler.Handle, raw, scopes);
+secretCmd.SetHandler(SecretHandler.Handle, raw, tenantId, clientId, SecretHandler.Secret, scopes);
 
 var rootCmd = new RootCommand()
 {
@@ -50,5 +54,6 @@ var rootCmd = new RootCommand()
     certCmd,
     envCmd,
 };
+rootCmd.AddGlobalOption(raw);
 
 await rootCmd.InvokeAsync(args);

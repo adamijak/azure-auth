@@ -1,13 +1,14 @@
 using Azure.Identity;
+using AzureAuth.Extensions;
 
-namespace AzureAuth;
+namespace AzureAuth.Handlers;
 
 public static class EnvHandler
 {
-    public static async Task Handle(string[] scopes)
+    public static async Task Handle(bool raw, string[] scopes)
     {
         var credential = new EnvironmentCredential();
         var token = await credential.GetTokenAsync(new(scopes));
-        Console.Write(token.Token);
+        token.ConsoleWrite(raw);
     }
 }
