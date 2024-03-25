@@ -10,27 +10,23 @@ jobs:
     continue-on-error: true
     strategy:
         matrix:
-          os:
-            - windows-latest
-            - ubuntu-latest
-            - macos-latest
           include:
-            - os: windows-latest
-              target: win-x64
-            - os: windows-latest
-              target: win-arm64
-            - os: ubuntu-latest
-              target: linux-x64
-            - os: ubuntu-latest
-              target: linux-musl-x64 
-            - os: ubuntu-latest
-              target: linux-musl-arm64
-            - os: ubuntu-latest
-              target: linux-arm64
-            - os: macos-latest
-              target: osx-x64
-            - os: macos-latest
-              target: osx-arm64
+            - target: win-x64
+              os: windows-latest
+            - target: win-arm64
+              os: windows-latest
+            - target: linux-x64
+              os: windows-latest
+            - target: linux-arm64
+              os: windows-latest
+            - target: linux-musl-x64 
+              os: windows-latest
+            - target: linux-musl-arm64
+              os: windows-latest
+            - target: osx-x64
+              os: macos-latest
+            - target: osx-arm64
+              os: macos-latest
     runs-on: ${{matrix.os}}
     permissions:
       contents: write
