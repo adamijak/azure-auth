@@ -485,3 +485,5 @@ $RECYCLE.BIN/
 
 **/.idea/
 **/out/
+
+*.local.yaml
