@@ -20,8 +20,12 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Build
-      run: dotnet publish -c Release -o ${{matrix.target}} AzureAuth
-
+      run: dotnet publish -c Release -o out AzureAuth
+    - name: Move
+      run: |
+        mkdir assets
+        mv out/azure-auth.exe assets/azure-auth.${{matrix-target}}.exe
+        mv out/azure-auth assets/azure-auth.${{matrix-target}}
     - name: Publish
       uses: softprops/action-gh-release@v1
       with:
