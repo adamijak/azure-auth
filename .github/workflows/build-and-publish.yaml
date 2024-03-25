@@ -18,11 +18,11 @@ jobs:
             - target: linux-x64
               os: ubuntu-latest
             - target: linux-arm64
-              os: ubuntu-latest
+              os: macos-latest
             - target: linux-musl-x64 
               os: ubuntu-latest
             - target: linux-musl-arm64
-              os: ubuntu-latest
+              os: macos-latest
             - target: osx-x64
               os: macos-latest
             - target: osx-arm64
