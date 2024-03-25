@@ -6,7 +6,7 @@ on:
       - "v*.*.*"
 
 jobs:
-  build-and-publish:
+  run:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -20,9 +20,9 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Build
-      run: dotnet publish -c Release -o ./{{matrix.target}} AzureAuth
+      run: dotnet publish -c Release -o ${{matrix.target}} AzureAuth
 
     - name: Publish
       uses: softprops/action-gh-release@v1
       with:
-        files: ./{{matrix.target}}/azure-auth
+        files: ${{matrix.target}}/azure-auth*
